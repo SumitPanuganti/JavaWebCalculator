@@ -1,0 +1,46 @@
+name: CI - Build and Push Docker to Docker Hub
+
+on:
+  push:
+    branches: [ master ]   # run only when pushing to master branch
+  workflow_dispatch:       # allow manual runs from Actions tab
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout source code
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # 2. Set up Java (so Maven can build your JAR)
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'   # change to your project’s JDK (8/11/17/21)
+          cache: maven
+
+      # 3. Build with Maven
+      - name: Build with Maven
+        run: mvn -B -ntp package
+
+      # 4. Log in to Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 5. Build & push Docker image
+      - name: Build and push Docker image
+        run: |
+          IMAGE=docker.io/${{ secrets.DOCKERHUB_USERNAME }}/javawebcalculator
+          
+          # Tag with 'latest' and also commit SHA
+          docker build -t $IMAGE:latest -t $IMAGE:${{ github.sha }} .
+          
+          # Push both tags
+          docker push $IMAGE:latest
+          docker push $IMAGE:${{ github.sha }}
