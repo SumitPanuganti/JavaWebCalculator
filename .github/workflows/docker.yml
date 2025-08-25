@@ -24,10 +24,10 @@ jobs:
 
       # 3. SonarQube Scan
       - name: SonarQube Scan
-        run: mvn -B verify sonar:sonar \
-          -Dsonar.projectKey=web-calci \
-          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar \
+              -Dsonar.projectKey=web-calci \
+              -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+              -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
       # 4. Build with Maven (after scan)
       - name: Build with Maven
