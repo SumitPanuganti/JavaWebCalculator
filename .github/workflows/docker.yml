@@ -31,7 +31,7 @@ jobs:
       - name: SonarQube Scan
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar \
               -Dsonar.projectKey=web-calci \
-              -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+              -Dsonar.host.url=http://51.20.190.39:9000 \
               -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
 
