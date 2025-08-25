@@ -36,7 +36,7 @@ jobs:
       # 5. Build & push Docker image
       - name: Build and push Docker image
         run: |
-          IMAGE=docker.io/${{ secrets.DOCKERHUB_USERNAME }}/javawebcalculator
+          IMAGE=docker.io/${{ secrets.DOCKERHUB_USERNAME }}/web-calci
           
           # Tag with 'latest' and also commit SHA
           docker build -t $IMAGE:latest -t $IMAGE:${{ github.sha }} .
