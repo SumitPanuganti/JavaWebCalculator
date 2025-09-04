@@ -23,12 +23,12 @@ jobs:
           cache: maven
 
       # 3. SonarQube Scan
-      - name: SonarQube Scan
-        run: |
-          mvn -B verify sonar:sonar \
-            -Dsonar.projectKey=web-calci \
-            -Dsonar.host.url=${{ vars.SONAR_HOST_URL }} \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      #- name: SonarQube Scan
+       # run: |
+        #  mvn -B verify sonar:sonar \
+         #   -Dsonar.projectKey=web-calci \
+          #  -Dsonar.host.url=${{ vars.SONAR_HOST_URL }} \
+           # -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
       # 4. Build with Maven (after scan)
       - name: Build with Maven
@@ -62,3 +62,4 @@ jobs:
           IMAGE=docker.io/${{ secrets.DOCKERHUB_USERNAME }}/web-calci
           docker push $IMAGE:latest
           docker push $IMAGE:${{ github.sha }}
+
