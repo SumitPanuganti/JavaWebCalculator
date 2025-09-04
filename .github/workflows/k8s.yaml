@@ -83,8 +83,13 @@ jobs:
       # 3. Update kubeconfig for EKS
       - name: Update kubeconfig
         run: aws eks update-kubeconfig --name my-cluster --region ca-central-1
+        
+     # 4. Apply Deployment manifest (creates if missing, updates if exists)
+      - name: Apply Kubernetes Deployment
+        run: kubectl apply -f k8s/deployment.yaml
+        
 
-      # 4. Deploy to EKS
+      # 5. Deploy to EKS
       - name: Deploy to EKS
         run: |
           IMAGE=docker.io/${{ secrets.DOCKERHUB_USERNAME }}/web-calci:${{ github.sha }}
