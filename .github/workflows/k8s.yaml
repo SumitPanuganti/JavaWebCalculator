@@ -82,7 +82,7 @@ jobs:
 
       # 3. Update kubeconfig for EKS
       - name: Update kubeconfig
-        run: aws eks update-kubeconfig --name my-cluster --region ca-central-1
+        run: aws eks update-kubeconfig --name my-cluster --region us-east-1
         
      # 4. Apply Deployment manifest (creates if missing, updates if exists)
       - name: Apply Kubernetes Deployment
